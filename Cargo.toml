@@ -1,0 +1,15 @@
+[package]
+name = "samuengine"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+glam = { version = "0.21", default-features = false, features = ["libm"] }
+glium = "0.29.1"
+obj-rs = { version = "0.6", features = ["glium"] }
+
+
+[build-dependencies]
+fs_extra = "1.2.0"
