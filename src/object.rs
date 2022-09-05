@@ -1,43 +1,47 @@
-use glam::{IVec3, Vec2, Vec3, Vec4};
+use glam::{ Vec2, Vec3, Vec4};
 use obj::{load_obj, Obj, Position};
 use std::{vec::Vec, io::{BufReader}, fs::File, path::Path};
+use glium::{VertexBuffer, vertex::Attribute};
 use crate::transform::{Transform};
 
-
+#[derive(Copy, Clone)]
 pub struct Vertex {
     pub position: Vec3,
     pub normal: Option<Vec2>,
     pub color: Option<Vec4>
 }
 
-pub struct Object {
-    pub transform: Transform,
-    pub vertices: Vec<Vertex>, 
-    pub indices: Vec<i16>
+unsafe impl glium::vertex::Attribute for Vec3 {
 
 }
 
+pub struct Object {
+    pub transform: Transform,
+    pub vertices: Vec<Vertex>, 
+    pub indices: Vec<u16>
+}
+
 impl Object {
-    pub const fn new(transform: Transform, vertices: Vec<Vertex>, indices: Vec<IVec3>) -> Object {
+    pub const fn new(transform: Transform, vertices: Vec<Vertex>, indices: Vec<u16>) -> Object {
         return Object{transform, vertices, indices};
     }
 
-    pub fn from_file(path: &Path, transform: Transform) -> Result<Object,  dyn std::error::Error> {
+    pub fn from_file(path: &Path, transform: Transform) -> Result<Object,  Box<dyn std::error::Error>> {
         let input = BufReader::new(File::open(path)?);
         let obj: Obj<Position> = load_obj(input)?;
 
-        let vertices = Vec::new();
+        let mut vertices = Vec::new();
         vertices.reserve(obj.vertices.len());
         for pos in obj.vertices {
             vertices.push(Vertex{position: Vec3::from_array(pos.position), normal: Option::None, color: Option::None});
         }
 
-        // let indices = Vec::new();
-        // indices.reserve(obj.indices.len());
-
-        return Self::New(transform, vertices, obj.indices);
+        return Ok(Self::new(transform, vertices, obj.indices));
     }
 
+    pub fn to_vertex_buffer(&self) -> VertexBuffer<Vertex> {
+        glium::implement_vertex!(Vertex, position);
+    }
 }
 
 // impl Camera {
