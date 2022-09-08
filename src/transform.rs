@@ -1,7 +1,7 @@
 use glam::{f32, Mat4, Quat, Vec3};
 use crate::samumath::degrees_to_radians;
 
-
+#[derive(Debug)]
 pub struct Transform {
     scale: Vec3,
     rotation: Quat,

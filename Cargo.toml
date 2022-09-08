@@ -9,6 +9,7 @@ edition = "2021"
 glam = { version = "0.21", default-features = false, features = ["libm"] }
 glium = "0.29.1"
 obj-rs = { version = "0.6", features = ["glium"] }
+itertools = "0.10.2"
 
 
 [build-dependencies]
