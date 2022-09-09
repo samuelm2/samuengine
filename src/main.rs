@@ -31,8 +31,8 @@ fn main() {
 
 
 
-    let vertex_shader_path = Path::join(build_path, "resources/shaders/simple.vert");
-    let fragment_shader_path = Path::join(build_path, "resources/shaders/simple.frag");
+    let vertex_shader_path = Path::join(build_path, "resources/shaders/phong.vert");
+    let fragment_shader_path = Path::join(build_path, "resources/shaders/phong.frag");
     let vertex_shader_src = fs::read_to_string(vertex_shader_path).expect("Error reading frag shader data");
     let fragment_shader_src = fs::read_to_string(fragment_shader_path).expect("Error reading vert shader data");
     let program = glium::Program::from_source(&display, &vertex_shader_src, &fragment_shader_src, None).unwrap();
@@ -92,11 +92,12 @@ fn main() {
         teapot.transform.rotate_y(1.0);
         let model_view =  view_matrix * teapot.transform.to_mat4();
         let perspective = camera.to_perspective_matrix();
-        let mvp = perspective * model_view;
+        //let mvp = perspective * model_view;
 
         let normal_matrix = Mat3::from_cols(model_view.x_axis.xyz(), model_view.y_axis.xyz(), model_view.z_axis.xyz()).transpose().inverse();
         let uniforms = uniform! {
-            model_view_perspective_matrix: mvp.to_cols_array_2d(),
+            model_view: model_view.to_cols_array_2d(),
+            perspective: perspective.to_cols_array_2d(),
             normal_matrix: normal_matrix.to_cols_array_2d()
         };
 
