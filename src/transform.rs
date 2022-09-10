@@ -3,9 +3,9 @@ use crate::samumath::degrees_to_radians;
 
 #[derive(Debug)]
 pub struct Transform {
-    scale: Vec3,
-    rotation: Quat,
-    translation: Vec3
+    pub scale: Vec3,
+    pub rotation: Quat,
+    pub translation: Vec3
 }
 
 impl Transform {

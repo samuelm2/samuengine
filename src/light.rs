@@ -1,6 +1,5 @@
-use glam::{Mat4};
+use glam::{Vec4};
 use crate::transform::{Transform};
-use crate::samumath::{degrees_to_radians};
 
 pub struct Light {
     pub transform: Transform,
@@ -10,7 +9,7 @@ pub struct Light {
 }
 
 impl Light {
-    pub const fn new(transform: Transform, ambient_color: Vec4, diffuse_color: Vec4, specular_color: Vec4) -> Camera {
+    pub const fn new(transform: Transform, ambient_color: Vec4, diffuse_color: Vec4, specular_color: Vec4) -> Light {
         return Light{transform, ambient_color, diffuse_color, specular_color};
     }
 

@@ -6,7 +6,7 @@ uniform mat4 model_view;
 uniform mat4 perspective;
 
 out vec3 f_normal;
-out vec4 f_position;
+out  vec4 f_position;
 
 void main() {
     f_normal = normal;
